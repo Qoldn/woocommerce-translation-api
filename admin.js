@@ -12,7 +12,7 @@ jQuery(function($){
             return;
         }
 
-        $('#wc_translate_progress').html('Starting translation...');
+        $('#wc_translate_progress').html('Queued translation jobs...');
 
         var data = {
             product_ids: arr
@@ -24,10 +24,10 @@ jQuery(function($){
             contentType: 'application/json',
             data: JSON.stringify(data),
             success: function(res){
-                $('#wc_translate_progress').html('Success — translated ' + (res.translated || 0) + ' products.');
+                $('#wc_translate_progress').html('Queued ' + (res.queued || res.queued === undefined ? (res.queued || 'jobs') : 'jobs') + '. Check Action Scheduler (background tasks) for progress.');
             },
             error: function(xhr){
-                var msg = 'Translation failed';
+                var msg = 'Request failed';
                 if (xhr && xhr.responseJSON && xhr.responseJSON.message) msg += ': ' + xhr.responseJSON.message;
                 $('#wc_translate_progress').html(msg);
             }
@@ -35,4 +35,3 @@ jQuery(function($){
 
     });
 });
-
